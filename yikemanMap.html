@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="�ٶȵ�ͼ,�ٶȵ�ͼAPI���ٶȵ�ͼ�Զ��幤�ߣ��ٶȵ�ͼ���������ù���" />
+    <meta name="description" content="�ٶȵ�ͼAPI�Զ����ͼ�������û��ڿ��ӻ����������ɰٶȵ�ͼ" />
+    <title>�ٶȵ�ͼAPI�Զ����ͼ</title>
+    <!--���ðٶȵ�ͼAPI-->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=abQeLr8VcLtx9XuVyfBI5NkcgiUtQix4"></script>
+  </head>
+  
+  <body style="margin:0px">
+    <!--�ٶȵ�ͼ����-->
+    <div style="width:289px;height:393px;border:#ccc solid 1px;font-size:12px" id="map"></div>
+    <p style="color:red;font-weight:600">
+      <a href="http://developer.baidu.com/map/index.php?title=jspopular/guide/introduction" style="color:#2f83c7" target="_blank"></a>
+      <a href="http://lbsyun.baidu.com/apiconsole/key?application=key" style="color:#2f83c7" target="_blank"></a>
+    </p>
+  </body>
+  <script type="text/javascript">
+    //�����ͳ�ʼ����ͼ������
+    function initMap(){
+      createMap();//������ͼ
+      setMapEvent();//���õ�ͼ�¼�
+      addMapControl();//���ͼ��ӿؼ�
+      addMapOverlay();//���ͼ��Ӹ�����
+    }
+    function createMap(){ 
+      map = new BMap.Map("map"); 
+      map.centerAndZoom(new BMap.Point(121.135929,31.464614),10);
+    }
+    function setMapEvent(){
+      map.enableScrollWheelZoom();
+      map.enableKeyboard();
+      map.enableDragging();
+      map.enableDoubleClickZoom()
+    }
+    function addClickHandler(target,window){
+      target.addEventListener("click",function(){
+       location.href="C:\\Users\\MrZeng\\Documents\\Axure\\HTML\\mysystem\\依科曼.html";
+      });
+    }
+    function addMapOverlay(){
+      var markers = [
+        {content:"",title:"",imageOffset: {width:0,height:-21},position:{lat:31.541058,lng:121.110204}},
+        {content:"",title:"",imageOffset: {width:0,height:-21},position:{lat:31.548936,lng:121.304526}}
+      ];
+      for(var index = 0; index < markers.length; index++ ){
+        var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
+        var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+          imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)
+        })});
+        var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
+        var opts = {
+          width: 200,
+          title: markers[index].title,
+          enableMessage: false
+        };
+        var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
+        marker.setLabel(label);
+        addClickHandler(marker,infoWindow);
+        map.addOverlay(marker);
+      };
+    }
+    //���ͼ��ӿؼ�
+    function addMapControl(){
+      var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+      scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+      map.addControl(scaleControl);
+      var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_RIGHT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+      map.addControl(navControl);
+    }
+    var map;
+      initMap();
+  </script>
+</html>
